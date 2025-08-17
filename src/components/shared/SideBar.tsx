@@ -7,6 +7,7 @@ import {
   UsersIcon,
   ShoppingCartIcon,
 } from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
 
 // Define props type
 type SideBarProps = {
@@ -19,6 +20,7 @@ type NavItem = {
   id: string;
   label: string;
   icon: React.ReactNode;
+  path?: string | undefined;
 };
 
 const SideBar: React.FC<SideBarProps> = ({ sidebarOpen, setSidebarOpen }) => {
@@ -26,12 +28,42 @@ const SideBar: React.FC<SideBarProps> = ({ sidebarOpen, setSidebarOpen }) => {
 
   // Navigation items
   const navItems: NavItem[] = [
-    { id: "dashboard", label: "Dashboard", icon: <HomeIcon className="h-5 w-5" /> },
-    { id: "portfolio", label: "Portfolio Section", icon: <UsersIcon className="h-5 w-5" /> },
-    { id: "orders", label: "Orders", icon: <ShoppingCartIcon className="h-5 w-5" /> },
-    { id: "payments", label: "Payments", icon: <CreditCardIcon className="h-5 w-5" /> },
-    { id: "reports", label: "Reports", icon: <ChartBarIcon className="h-5 w-5" /> },
-    { id: "settings", label: "Settings", icon: <CogIcon className="h-5 w-5" /> },
+    {
+      id: "dashboard",
+      label: "Dashboard",
+      path: "/dashboard",
+      icon: <HomeIcon className="h-5 w-5" />,
+    },
+    {
+      id: "portfolio",
+      label: "Portfolio Section",
+      path: "/dashboard/portfolio-section",
+      icon: <UsersIcon className="h-5 w-5" />,
+    },
+    {
+      id: "orders",
+      label: "Orders",
+      path: "/dashboard/portfolio-section",
+      icon: <ShoppingCartIcon className="h-5 w-5" />,
+    },
+    {
+      id: "payments",
+      label: "Payments",
+      path: "/dashboard/portfolio-section",
+      icon: <CreditCardIcon className="h-5 w-5" />,
+    },
+    {
+      id: "reports",
+      label: "Reports",
+      path: "/dashboard/portfolio-section",
+      icon: <ChartBarIcon className="h-5 w-5" />,
+    },
+    {
+      id: "settings",
+      label: "Settings",
+      path: "/dashboard/portfolio-section",
+      icon: <CogIcon className="h-5 w-5" />,
+    },
   ];
 
   return (
@@ -46,19 +78,21 @@ const SideBar: React.FC<SideBarProps> = ({ sidebarOpen, setSidebarOpen }) => {
           {sidebarOpen ? "←" : "→"}
         </button>
       </div>
-      
+
       {/* Navigation */}
       <nav className="mt-8 flex-1 overflow-y-auto">
-        {navItems.map((item) => (
-          <NavItem
-            key={item.id}
-            icon={item.icon}
-            active={activeTab === item.id}
-            onClick={() => setActiveTab(item.id)}
-            sidebarOpen={sidebarOpen}
-          >
-            {item.label}
-          </NavItem>
+        {navItems.map((item, index) => (
+          <Link to={item.path ?? "#"} key={index}>
+            <NavItem
+              key={item.id}
+              icon={item.icon}
+              active={activeTab === item.id}
+              onClick={() => setActiveTab(item.id)}
+              sidebarOpen={sidebarOpen}
+            >
+              {item.label}
+            </NavItem>
+          </Link>
         ))}
       </nav>
     </div>
