@@ -4,6 +4,7 @@ import {
   MagnifyingGlassIcon as SearchIcon,
   ChevronDownIcon,
 } from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
 
 type DashboardHeaderProps = {
   sidebarOpen: boolean;
@@ -108,12 +109,12 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({ sidebarOpen }) => {
                 >
                   Settings
                 </a>
-                <a
-                  href="#"
+                <Link
+                  to="/"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 >
                   Sign out
-                </a>
+                </Link>
               </div>
             )}
           </div>
