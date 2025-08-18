@@ -3,6 +3,7 @@ import { Modal, Form, Input, Switch, Upload, Button, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import type { UploadProps } from "antd";
 import { useUpdateSinglePortfolioMutation } from "../../../../redux/services/portfolioApi/portfolioApi";
+import Swal from "sweetalert2";
 
 interface UpdatePortfolioModalProps {
   open: boolean;
@@ -18,7 +19,8 @@ const UpdatePortfolioModal: React.FC<UpdatePortfolioModalProps> = ({
   const [form] = Form.useForm();
   const [fileList, setFileList] = useState<any[]>([]);
   const [isImageChanged, setIsImageChanged] = useState(false);
-  const [updateSinglePortfolio, { isLoading }] = useUpdateSinglePortfolioMutation();
+  const [updateSinglePortfolio, { isLoading }] =
+    useUpdateSinglePortfolioMutation();
 
   useEffect(() => {
     if (open && selectedItem) {
@@ -29,12 +31,14 @@ const UpdatePortfolioModal: React.FC<UpdatePortfolioModalProps> = ({
       });
 
       if (selectedItem.image) {
-        setFileList([{
-          uid: '-1',
-          name: 'current-image',
-          status: 'done',
-          url: selectedItem.image,
-        }]);
+        setFileList([
+          {
+            uid: "-1",
+            name: "current-image",
+            status: "done",
+            url: selectedItem.image,
+          },
+        ]);
       }
       setIsImageChanged(false);
     }
@@ -43,7 +47,7 @@ const UpdatePortfolioModal: React.FC<UpdatePortfolioModalProps> = ({
   const handleOk = async () => {
     try {
       const values = await form.validateFields();
-      
+
       const formData = new FormData();
       formData.append("title", values.title);
       formData.append("categories", values.categories);
@@ -66,12 +70,21 @@ const UpdatePortfolioModal: React.FC<UpdatePortfolioModalProps> = ({
         console.log(`${key}:`, value);
       }
 
-      await updateSinglePortfolio({
+      const response = await updateSinglePortfolio({
         id: selectedItem._id,
-        updatedData: formData
+        updatedData: formData,
       }).unwrap();
 
-      message.success("Portfolio updated successfully!");
+      // console.log(response);
+      if (response?.success) {
+        Swal.fire({
+          icon: "success",
+          title: "Updated successfully.",
+          text: "Item Updated successfully. Please Check..!",
+        });
+      }
+
+      // message.success("Portfolio updated successfully!");
       setOpen(false);
     } catch (error) {
       console.error("Update failed:", error);
@@ -126,9 +139,9 @@ const UpdatePortfolioModal: React.FC<UpdatePortfolioModalProps> = ({
         <Button key="back" onClick={handleCancel}>
           Cancel
         </Button>,
-        <Button 
-          key="submit" 
-          type="primary" 
+        <Button
+          key="submit"
+          type="primary"
           onClick={handleOk}
           loading={isLoading}
         >
@@ -145,18 +158,18 @@ const UpdatePortfolioModal: React.FC<UpdatePortfolioModalProps> = ({
           <Input placeholder="Enter portfolio title" />
         </Form.Item>
 
-        <Form.Item 
+        <Form.Item
           label="Image"
           required
           rules={[{ required: true, message: "Please upload an image!" }]}
         >
           <Upload {...uploadProps} listType="picture">
             <Button icon={<UploadOutlined />}>
-              {fileList.length ? 'Change Image' : 'Upload Image'}
+              {fileList.length ? "Change Image" : "Upload Image"}
             </Button>
           </Upload>
           <div className="text-xs text-gray-500 mt-1">
-            {fileList.length ? 'Image selected' : 'No image selected'}
+            {fileList.length ? "Image selected" : "No image selected"}
           </div>
         </Form.Item>
 
