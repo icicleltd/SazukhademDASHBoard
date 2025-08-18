@@ -1,7 +1,16 @@
 import React, { useState } from "react";
-import { Modal, Form, Input, Upload, Button, message, AutoComplete } from "antd";
+import {
+  Modal,
+  Form,
+  Input,
+  Upload,
+  Button,
+  message,
+  AutoComplete,
+} from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useAddNewPortfolioMutation } from "../../../../redux/services/portfolioApi/portfolioApi";
+import Swal from "sweetalert2";
 
 interface AddPortfolioModalProps {
   open: boolean;
@@ -16,7 +25,7 @@ const categoryOptions = [
   "As a Judge",
   "As an Anchor",
   "As a Canvas Creator",
-].map(option => ({ value: option }));
+].map((option) => ({ value: option }));
 
 const AddPortfolioModal: React.FC<AddPortfolioModalProps> = ({
   open,
@@ -61,13 +70,23 @@ const AddPortfolioModal: React.FC<AddPortfolioModalProps> = ({
       }
 
       // Call the mutation
-      await addNewPortfolio(formData).unwrap();
+      const response = await addNewPortfolio(formData).unwrap();
+
+      if (response?.success) {
+        Swal.fire({
+          icon: "success",
+          title: "Added successfully.",
+          text: "Item Added successfully. Please Check..!",
+        });
+      }
 
       message.success("Portfolio added successfully!");
       handleCancel();
     } catch (error) {
       console.error("Submission error:", error);
-      message.error("Failed to add portfolio. Please check all required fields.");
+      message.error(
+        "Failed to add portfolio. Please check all required fields."
+      );
     }
   };
 
@@ -86,12 +105,14 @@ const AddPortfolioModal: React.FC<AddPortfolioModalProps> = ({
         return false;
       }
 
-      setFileList([{
-        uid: file.name,
-        name: file.name,
-        status: 'done',
-        originFileObj: file
-      }]);
+      setFileList([
+        {
+          uid: file.name,
+          name: file.name,
+          status: "done",
+          originFileObj: file,
+        },
+      ]);
       return false;
     },
     fileList,
@@ -155,7 +176,8 @@ const AddPortfolioModal: React.FC<AddPortfolioModalProps> = ({
             value={category}
             onChange={setCategory}
             filterOption={(inputValue, option) =>
-              option!.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+              option!.value.toUpperCase().indexOf(inputValue.toUpperCase()) !==
+              -1
             }
           />
         </Form.Item>
