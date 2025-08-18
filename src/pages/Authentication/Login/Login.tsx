@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useLoginMutation } from "../../../redux/services/authApi/authApi";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import logo from "../../../assets/images/sazu_logo_01.png";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -15,7 +16,7 @@ const Login = () => {
     try {
       const response = await login({ email, password }).unwrap();
 
-      console.log(response);
+      // console.log(response);
 
       if (response?.success) {
         // Store token in localStorage
@@ -153,8 +154,10 @@ const Login = () => {
 
         {/* Brand Section */}
         <div className="flex flex-col items-center justify-center w-1/2 bg-blue-50 p-8">
-          <div className="mb-6 flex items-center justify-center w-24 h-24 rounded-full bg-blue-100">
-            <h1 className="text-2xl font-bold text-blue-600">Logo</h1>
+          <div className="mb-6 flex items-center justify-center  rounded-full bg-gray-600">
+            <div>
+              <img src={logo} alt="" />
+            </div>
           </div>
 
           <h2 className="text-3xl font-bold mb-4 text-center text-gray-800">
