@@ -12,7 +12,7 @@ const DashboardLayout = () => {
       <div
         className={`${
           sidebarOpen ? "w-64" : "w-20"
-        } bg-indigo-700 text-white transition-all duration-300 ease-in-out`}
+        } bg-black text-white transition-all duration-300 ease-in-out `}
       >
         <SideBar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       </div>

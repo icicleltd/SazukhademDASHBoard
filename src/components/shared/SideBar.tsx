@@ -67,7 +67,7 @@ const SideBar: React.FC<SideBarProps> = ({ sidebarOpen, setSidebarOpen }) => {
   ];
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-full flex flex-col overflow-hidden">
       {/* Sidebar Header */}
       <div className="p-4 flex items-center justify-between border-b border-indigo-600">
         {sidebarOpen && <h1 className="text-xl font-bold">DashboardPro</h1>}
