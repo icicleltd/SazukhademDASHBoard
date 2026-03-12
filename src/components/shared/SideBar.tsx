@@ -47,6 +47,12 @@ const SideBar: React.FC<SideBarProps> = ({ sidebarOpen, setSidebarOpen }) => {
       icon: <ShoppingCartIcon className="h-5 w-5" />,
     },
     {
+      id: "shop",
+      label: "Shop Section",
+      path: "/dashboard/shop-section",
+      icon: <ShoppingCartIcon className="h-5 w-5" />,
+    },
+    {
       id: "about",
       label: "About Section",
       path: "/dashboard/portfolio-section",
