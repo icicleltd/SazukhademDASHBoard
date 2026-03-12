@@ -15,7 +15,7 @@ export const artworkApi = baseApi.injectEndpoints({
 
     // 2️⃣ Get Shop Data
     getShop: builder.query({
-      query: () => "/shop",
+      query: () => "/shop?limit=60",
       providesTags: ["Shop"],
     }),
 
