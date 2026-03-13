@@ -21,7 +21,7 @@ export const artworkApi = baseApi.injectEndpoints({
 
     // 3️⃣ Get Customers
     getCustomers: builder.query({
-      query: () => "/customers",
+      query: () => "/shop/customer",
       providesTags: ["Customers"],
     }),
   }),
